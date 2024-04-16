@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     public InputAction MoveAction;
     
     public float turnSpeed = 20f;
+    public float moveSpeed = 5f; // added this, move speed can also be modified later by the linear interpolation factor
 
     Animator m_Animator;
     Rigidbody m_Rigidbody;
@@ -53,11 +54,17 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 desiredForward = Vector3.RotateTowards (transform.forward, m_Movement, turnSpeed * Time.deltaTime, 0f);
         m_Rotation = Quaternion.LookRotation (desiredForward);
+
+        //need to calculate a target position to linear interpolate between target and current
+        Vector3 targetPosition = transform.position + m_Movement * moveSpeed * Time.deltaTime;
+
+        //the actual interpolation:
+        m_Rigidbody.MovePosition(Vector3.Lerp(transform.position, targetPosition, 0.5f)); //0.5 is the linear interpolation factor, rn it takes the target destination, and gives you half of the vector needed to get there, halving your speed
+        m_Rigidbody.MoveRotation(Quaternion.Lerp(transform.rotation, m_Rotation, 0.5f));
     }
 
     void OnAnimatorMove ()
     {
-        m_Rigidbody.MovePosition (m_Rigidbody.position + m_Movement * m_Animator.deltaPosition.magnitude);
-        m_Rigidbody.MoveRotation (m_Rotation);
+        //fixed with linear interpolation
     }
 }
