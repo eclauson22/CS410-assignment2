@@ -7,9 +7,12 @@ public class Observer : MonoBehaviour
     public Transform player;
     public GameEnding gameEnding;
 
-    bool m_IsPlayerInRange;
+    //public float detectionRadius = 5.0f; //how far away the enemy will be able to detect
+    public float detectionAngle = 90.0f;
+    //bool m_IsPlayerInRange;
 
-    void OnTriggerEnter (Collider other)
+    
+    /*void OnTriggerEnter (Collider other)
     {
         if (other.transform == player)
         {
@@ -23,10 +26,11 @@ public class Observer : MonoBehaviour
         {
             m_IsPlayerInRange = false;
         }
-    }
+    }*/
+
 
     void Update ()
-    {
+    {/*
         if (m_IsPlayerInRange)
         {
             Vector3 direction = player.position - transform.position + Vector3.up;
@@ -40,6 +44,24 @@ public class Observer : MonoBehaviour
                     gameEnding.CaughtPlayer ();
                 }
             }
+        }*/
+        LookForPlayer();
+    }
+
+    void LookForPlayer()
+    {
+        Vector3 enemyPosition = transform.position;
+        Vector3 toPlayer = player.position - enemyPosition;
+
+        toPlayer.y = 0;
+
+        if (toPlayer.magnitude <= 1) // the number is how far away the enemy detects the player
+        {
+            if (Vector3.Dot(toPlayer.normalized, transform.forward) > Mathf.Cos(detectionAngle * 0.5f * Mathf.Deg2Rad))
+            {
+            gameEnding.CaughtPlayer();
+            }
         }
     }
 }
+
