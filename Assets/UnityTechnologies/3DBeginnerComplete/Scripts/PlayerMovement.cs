@@ -6,7 +6,11 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     public InputAction MoveAction;
-    
+
+    // Added
+    public GameObject explosionParticleEffect;
+    public AudioSource explosionAudio;
+
     public float turnSpeed = 20f;
     public float moveSpeed = 5f; // added this, move speed can also be modified later by the linear interpolation factor
 
@@ -15,6 +19,9 @@ public class PlayerMovement : MonoBehaviour
     AudioSource m_AudioSource;
     Vector3 m_Movement;
     Quaternion m_Rotation = Quaternion.identity;
+
+    float m_Timer;
+    bool m_IsMoving;
 
     void Start ()
     {
@@ -46,10 +53,23 @@ public class PlayerMovement : MonoBehaviour
             {
                 m_AudioSource.Play();
             }
+
+            m_IsMoving = true;
+            m_Timer = 0f;
         }
         else
         {
             m_AudioSource.Stop ();
+            m_IsMoving = false;
+
+            m_Timer += Time.deltaTime;
+
+            if (m_Timer >= 2f && !m_IsMoving)
+            {
+                ExplodePlayer();
+            }
+
+            
         }
 
         Vector3 desiredForward = Vector3.RotateTowards (transform.forward, m_Movement, turnSpeed * Time.deltaTime, 0f);
@@ -61,6 +81,14 @@ public class PlayerMovement : MonoBehaviour
         //the actual interpolation:
         m_Rigidbody.MovePosition(Vector3.Lerp(transform.position, targetPosition, 0.5f)); //0.5 is the linear interpolation factor, rn it takes the target destination, and gives you half of the vector needed to get there, halving your speed
         m_Rigidbody.MoveRotation(Quaternion.Lerp(transform.rotation, m_Rotation, 0.5f));
+    }
+
+    void ExplodePlayer()
+    {
+        Instantiate(explosionParticleEffect, transform.position, Quaternion.identity);
+        explosionAudio.Play();
+
+        Destroy(gameObject); // Destroy player object
     }
 
     void OnAnimatorMove ()
