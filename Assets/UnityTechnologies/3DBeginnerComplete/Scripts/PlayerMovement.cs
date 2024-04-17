@@ -64,7 +64,7 @@ public class PlayerMovement : MonoBehaviour
 
             m_Timer += Time.deltaTime;
 
-            if (m_Timer >= 2f && !m_IsMoving)
+            if (m_Timer >= 5f && !m_IsMoving)
             {
                 ExplodePlayer();
             }

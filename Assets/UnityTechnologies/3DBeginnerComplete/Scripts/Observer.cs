@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// have sound play in larger radius 
+
 public class Observer : MonoBehaviour
 {
     public Transform player;
@@ -10,8 +12,9 @@ public class Observer : MonoBehaviour
     //public float detectionRadius = 5.0f; //how far away the enemy will be able to detect
     public float detectionAngle = 90.0f;
     //bool m_IsPlayerInRange;
+    public AudioSource explosionAudio;
 
-    
+
     /*void OnTriggerEnter (Collider other)
     {
         if (other.transform == player)
@@ -27,6 +30,11 @@ public class Observer : MonoBehaviour
             m_IsPlayerInRange = false;
         }
     }*/
+
+    private void Start()
+    {
+        explosionAudio = GetComponent<AudioSource>();
+    }
 
 
     void Update ()
@@ -60,6 +68,16 @@ public class Observer : MonoBehaviour
             if (Vector3.Dot(toPlayer.normalized, transform.forward) > Mathf.Cos(detectionAngle * 0.5f * Mathf.Deg2Rad))
             {
             gameEnding.CaughtPlayer();
+            }
+        }
+
+        else if (toPlayer.magnitude <= 3) // the number is how far away the enemy detects the player
+        {
+            if (Vector3.Dot(toPlayer.normalized, transform.forward) > Mathf.Cos(detectionAngle * 0.5f * Mathf.Deg2Rad))
+            {
+                // Play noise
+                explosionAudio.Play();
+                Debug.Log("TEST");
             }
         }
     }
