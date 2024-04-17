@@ -4191,6 +4191,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 142462114116109389, guid: e58a8494f35e17f45ba5bbffdfb92517,
         type: 3}
+      propertyPath: gameEnding
+      value: 
+      objectReference: {fileID: 5642716984738007026}
+    - target: {fileID: 142462114116109389, guid: e58a8494f35e17f45ba5bbffdfb92517,
+        type: 3}
       propertyPath: explosionAudio
       value: 
       objectReference: {fileID: 1442556157}
@@ -4699,6 +4704,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4716364146922733708, guid: b6c582e48c5c6420aa7b6a0dcb09e8d6,
+        type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4716364146922733708, guid: b6c582e48c5c6420aa7b6a0dcb09e8d6,
+        type: 3}
+      propertyPath: lengthInSec
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4716364146922733708, guid: b6c582e48c5c6420aa7b6a0dcb09e8d6,
+        type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 7251871112361937319, guid: b6c582e48c5c6420aa7b6a0dcb09e8d6,
         type: 3}
       propertyPath: m_Name

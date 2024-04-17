@@ -25,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
 
     float m_Timer;
     bool m_IsMoving;
+    bool isGameOver = false;
 
     void Start ()
     {
@@ -67,8 +68,9 @@ public class PlayerMovement : MonoBehaviour
 
             m_Timer += Time.deltaTime;
 
-            if (m_Timer >= 5.0f && m_Timer <= 7.0f && !m_IsMoving)
+            if (m_Timer >= 5.0f && !isGameOver && !m_IsMoving)
             {
+                isGameOver = true;
                 ExplodePlayer();
                 // gameEnding.CaughtPlayer();
             }
@@ -87,24 +89,29 @@ public class PlayerMovement : MonoBehaviour
         m_Rigidbody.MoveRotation(Quaternion.Lerp(transform.rotation, m_Rotation, 0.5f));
     }
 
+    // CREDIT: help with ExplodePlayer and IENumerator functionality from ChatGPT
     void ExplodePlayer()
     {
-        Instantiate(explosionParticleEffect, transform.position, Quaternion.identity);
-        // explosionAudio.Play();
+        // instantiate explosion particle effect
+        GameObject explosion = Instantiate(explosionParticleEffect, transform.position, Quaternion.identity);
 
-        Destroy(gameObject); // Destroy player object
+        // get the duration of particle effect
+        float particleDuration = explosion.GetComponent<ParticleSystem>().main.duration;
 
-        // Time.timeScale = 0f; // Stop time to freeze gameplay
-        // gameOverScreen.SetActive(true);
+        // call game ending after particle effect finishes
+        StartCoroutine(DelayedGameOver(particleDuration));
+    }
 
-        // gameEnding.CaughtPlayer();
+    IEnumerator DelayedGameOver(float delay)
+    {
+        yield return new WaitForSeconds(delay);
 
-
-
+        // call game ending after particle effect finishes
+        gameEnding.CaughtPlayer();
     }
 
     void OnAnimatorMove ()
     {
-        //fixed with linear interpolation
+        // fixed with linear interpolation
     }
 }
