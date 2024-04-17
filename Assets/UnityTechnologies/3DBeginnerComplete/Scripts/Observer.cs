@@ -31,10 +31,6 @@ public class Observer : MonoBehaviour
         }
     }*/
 
-    private void Start()
-    {
-        explosionAudio = GetComponent<AudioSource>();
-    }
 
 
     void Update ()
@@ -54,6 +50,12 @@ public class Observer : MonoBehaviour
             }
         }*/
         LookForPlayer();
+
+        //if (Input.GetKeyDown(KeyCode.R))
+        //{
+        //    // Restart the game when the R key is pressed
+        //    gameManager.RestartGame();
+        //}
     }
 
     void LookForPlayer()
@@ -76,7 +78,11 @@ public class Observer : MonoBehaviour
             if (Vector3.Dot(toPlayer.normalized, transform.forward) > Mathf.Cos(detectionAngle * 0.5f * Mathf.Deg2Rad))
             {
                 // Play noise
-                explosionAudio.Play();
+                if (explosionAudio != null)
+                {
+                    explosionAudio.Play();
+                    
+                }
                 Debug.Log("TEST");
             }
         }

@@ -6,13 +6,16 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     public InputAction MoveAction;
+    public GameEnding gameEnding;
 
     // Added
     public GameObject explosionParticleEffect;
-    public AudioSource explosionAudio;
+    // public AudioSource explosionAudio;
 
     public float turnSpeed = 20f;
     public float moveSpeed = 5f; // added this, move speed can also be modified later by the linear interpolation factor
+
+    public GameObject gameOverScreen;
 
     Animator m_Animator;
     Rigidbody m_Rigidbody;
@@ -64,9 +67,10 @@ public class PlayerMovement : MonoBehaviour
 
             m_Timer += Time.deltaTime;
 
-            if (m_Timer >= 5f && !m_IsMoving)
+            if (m_Timer >= 5.0f && m_Timer <= 7.0f && !m_IsMoving)
             {
                 ExplodePlayer();
+                // gameEnding.CaughtPlayer();
             }
 
             
@@ -86,9 +90,17 @@ public class PlayerMovement : MonoBehaviour
     void ExplodePlayer()
     {
         Instantiate(explosionParticleEffect, transform.position, Quaternion.identity);
-        explosionAudio.Play();
+        // explosionAudio.Play();
 
         Destroy(gameObject); // Destroy player object
+
+        // Time.timeScale = 0f; // Stop time to freeze gameplay
+        // gameOverScreen.SetActive(true);
+
+        // gameEnding.CaughtPlayer();
+
+
+
     }
 
     void OnAnimatorMove ()
