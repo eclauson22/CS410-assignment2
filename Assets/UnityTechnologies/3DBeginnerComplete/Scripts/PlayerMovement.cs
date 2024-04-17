@@ -68,7 +68,7 @@ public class PlayerMovement : MonoBehaviour
 
             m_Timer += Time.deltaTime;
 
-            if (m_Timer >= 5.0f && !isGameOver && !m_IsMoving)
+            if (m_Timer >= 6.0f && !isGameOver && !m_IsMoving)
             {
                 isGameOver = true;
                 ExplodePlayer();
