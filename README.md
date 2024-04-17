@@ -6,6 +6,6 @@ Linear Interpolation (Sawyer): Linear Interpolation was used in the PlayerMoveme
 
 Particle Effect (Eliza): a particle effect was used in PlayerMovement.cs in conjunction with a timer. A timer counts up when the player is not moving, and resets when the player begins to move again. If the timer hits 5 seconds, a red particle effect (mimicking an explosion or a spell) appears and the player disappears, stopping gameplay. This creates a new gameplay rule: that the player must not pause and hide for more than five seconds. 
 
-Sound Effect (Eliza): an explosion sound was applied to the Observer.cs script, which is attached to the enemy objects. When the player gets within a close radius of a Gargoyle, the sound plays. The functionality to detect the radius is applied from the Dot Product addition in Observer.cs, with a new, wider radius applied for this use. 
+Sound Effect (Group Effort): an explosion sound was applied to the Observer.cs script, which is attached to the enemy objects. When the player gets within a close radius of a Gargoyle, the sound plays. The functionality to detect the radius is applied from the Dot Product addition in Observer.cs, with a new, wider radius applied for this use. 
 
 Sources used: https://www.youtube.com/watch?v=MB7d3MdVHwU and ChatGPT
